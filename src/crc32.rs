@@ -25,8 +25,8 @@ pub fn crc32(iv: u32, sv: u32, data: &[u8]) -> u32 {
 
     for &byte in data.iter() {
         let mut sum = crc32_reverse(byte as u32);
-        for _x in 0..8 {
-            sum <<= 1;
+        for x in 0..8 {
+            sum <<= (x != 0) as u32;
             crc = if ((crc ^ sum) & 0x80000000) != 0 {
                 (crc << 1) ^ sv
             } else {

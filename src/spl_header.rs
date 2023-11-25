@@ -218,11 +218,9 @@ impl TryFrom<&[u8]> for UbootSplHeader {
             let bofs = u32::from_le_bytes(val[idx..idx.saturating_add(WORD_LEN)].try_into()?);
             idx = idx.saturating_add(WORD_LEN);
 
-            // deserialize `zro2` reserved padding
-            // TODO: should we reject non-zero padding here?
-            // If CRC32 validates, the header should be valid.
-            // Maybe too early to reject here.
-            let zro2: [u8; RES_PAD2_LEN] = val[idx..idx.saturating_add(RES_PAD2_LEN)].try_into()?;
+            // skip deserializing `zro2` reserved padding
+            // It doesn't matter what is in this field, so ignore it.
+            let zro2 = [0u8; RES_PAD2_LEN];
             idx = idx.saturating_add(RES_PAD2_LEN);
 
             // deserialize VERS field from buffer
@@ -239,13 +237,10 @@ impl TryFrom<&[u8]> for UbootSplHeader {
 
             // deserialize CRCS field from buffer
             let crcs = u32::from_le_bytes(val[idx..idx.saturating_add(WORD_LEN)].try_into()?);
-            idx = idx.saturating_add(WORD_LEN);
 
-            // deserialize `zro3` reserved padding
-            // TODO: should we reject non-zero padding here?
-            // If CRC32 validates, the header should be valid.
-            // Maybe too early to reject here.
-            let zro3: [u8; RES_PAD3_LEN] = val[idx..idx.saturating_add(RES_PAD2_LEN)].try_into()?;
+            // skip deserializing `zro3` reserved padding
+            // It doesn't matter what is in this field, so ignore it.
+            let zro3 = [0u8; RES_PAD3_LEN];
 
             Ok(Self {
                 sofs,

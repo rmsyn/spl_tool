@@ -8,9 +8,9 @@ use std::io::{self, Read, Seek, Write};
 #[cfg(feature = "cli")]
 use clap::Parser;
 
-use spl_tool::{Error, Result};
 #[cfg(feature = "cli")]
 use spl_tool::{crc32, crc32_final};
+use spl_tool::{Error, Result};
 #[cfg(feature = "cli")]
 use spl_tool::{HeaderConf, UbootSplHeader};
 #[cfg(feature = "cli")]

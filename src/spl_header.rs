@@ -308,7 +308,14 @@ impl HeaderConf {
 
     /// Gets the header name as a string.
     pub fn name(&self) -> &str {
-        core::str::from_utf8(self.name.as_ref()).unwrap_or("")
+        core::str::from_utf8(self.name[..self.name_len()].as_ref()).unwrap_or("")
+    }
+
+    fn name_len(&self) -> usize {
+        self.name
+            .iter()
+            .position(|&b| b == 0)
+            .unwrap_or(self.name.len())
     }
 
     /// Sets the header name from a string.

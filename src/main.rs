@@ -8,7 +8,7 @@ use spl_tool::{Error, HeaderConf, Result, UbootSplHeader};
 use spl_tool::{CRC_FAILED, DEF_BACKUP, DEF_SPL_FILE, MAX_SPL_LEN, SPL_HEADER_LEN};
 
 #[derive(clap::Parser, Debug)]
-#[command(author, version, about, long_about = None)]
+#[command(author, about, long_about = None)]
 struct Args {
     /// Create the SPL header
     #[arg(short = 'c', long = "create-splhdr", default_value = "false")]
@@ -16,11 +16,11 @@ struct Args {
     /// Fix the IMG header
     #[arg(short = 'i', long = "fix-imghdr", default_value = "false")]
     fix_img_header: bool,
-    /// Provide a custom SBL_BAK_OFFSET address
-    #[arg(short = 'b', long = "sbl-bak-addr", default_value = "0x200000")]
+    /// Provide a custom SBL_BAK_OFFSET address, default value: 0x200000
+    #[arg(short = 'b', long = "sbl-bak-addr", default_value = "0")]
     sbl_bak_addr: u32,
-    /// Provide a custom version
-    #[arg(short = 'v', long = "version", default_value = "0x01010101")]
+    /// Provide a custom version, default value: 0x01010101
+    #[arg(short = 'v', long = "version", default_value = "0")]
     version: u32,
     /// Provide a SPL filename
     #[arg(short = 'f', long = "file")]

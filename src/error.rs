@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-2.0+
+
 use core::fmt;
 
 /// Convenience alias for a [`Result`](core::result::Result) type for the library.
@@ -11,6 +13,7 @@ pub enum Error {
     InvalidSlice(core::array::TryFromSliceError),
     InvalidHeaderFile,
     InvalidSplFile,
+    RequiresCliFeature,
 }
 
 impl From<core::array::TryFromSliceError> for Error {
@@ -33,6 +36,7 @@ impl fmt::Display for Error {
                 write!(f, "invalid SPL header file, ensure the path is valid")
             }
             Self::InvalidSplFile => write!(f, "invalid SPL file, ensure the path is valid"),
+            Self::RequiresCliFeature => write!(f, "the CLI application requires the `cli` feature"),
         }
     }
 }

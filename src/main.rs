@@ -1,14 +1,24 @@
+// SPDX-License-Identifier: GPL-2.0+
+
+#[cfg(feature = "cli")]
 use std::fs;
+#[cfg(feature = "cli")]
 use std::io::{self, Read, Seek, Write};
 
+#[cfg(feature = "cli")]
 use clap::Parser;
 
+use spl_tool::{Error, Result};
+#[cfg(feature = "cli")]
 use spl_tool::{crc32, crc32_final};
-use spl_tool::{Error, HeaderConf, Result, UbootSplHeader};
+#[cfg(feature = "cli")]
+use spl_tool::{HeaderConf, UbootSplHeader};
+#[cfg(feature = "cli")]
 use spl_tool::{CRC_FAILED, DEF_BACKUP, DEF_SPL_FILE, MAX_SPL_LEN, SPL_HEADER_LEN};
 
 #[derive(clap::Parser, Debug)]
 #[command(author, about, long_about = None)]
+#[cfg(feature = "cli")]
 struct Args {
     /// Create the SPL header
     #[arg(short = 'c', long = "create-splhdr", default_value = "false")]
@@ -28,6 +38,17 @@ struct Args {
 }
 
 fn main() -> Result<()> {
+    spl_main()
+}
+
+#[cfg(not(feature = "cli"))]
+fn spl_main() -> Result<()> {
+    println!("The CLI application requires the `cli` feature. Please re-compile with: cargo build --features cli");
+    Err(Error::RequiresCliFeature)
+}
+
+#[cfg(feature = "cli")]
+fn spl_main() -> Result<()> {
     env_logger::init();
 
     let args = Args::parse();
@@ -59,6 +80,7 @@ fn main() -> Result<()> {
     Ok(())
 }
 
+#[cfg(feature = "cli")]
 fn spl_create_header(conf: &HeaderConf) -> Result<()> {
     if !conf.create_header() {
         Ok(())
@@ -131,6 +153,7 @@ fn spl_create_header(conf: &HeaderConf) -> Result<()> {
     }
 }
 
+#[cfg(feature = "cli")]
 fn spl_fix_image_header(conf: &HeaderConf) -> Result<()> {
     if !conf.fix_image_header() {
         Ok(())

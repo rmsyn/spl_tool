@@ -1,9 +1,9 @@
 [package]
 name = "spl_tool"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["rmsyn <rmsynchls@gmail.com>"]
-repository = "https://github.com/rmsyn/jh71xx-pac"
+repository = "https://github.com/rmsyn/spl_tool"
 categories = ["embedded", "hardware-support", "no-std"]
 description = "Port of StarFive's C spl_tool with default support for VisionFive2"
 keywords = ["riscv", "visionfive2", "u-boot", "spl"]
